@@ -1062,3 +1062,23 @@ if OS == "windows":
     config["pty"] = False
 
 ns.configure(config)
+
+from invoke import task
+import os
+import subprocess
+
+@task
+def complexity_score(ctx):
+    """
+    Calculates the complexity score of the codebase using radon.
+    """
+    # Run radon command to calculate the complexity score
+    result = subprocess.run(['radon', 'cc', '-a', 'notebook/dev'], capture_output=True, text=True)
+
+    if result.returncode == 0:
+        # Print the complexity score
+        print(result.stdout)
+    else:
+        # An error occurred while running radon
+        print("An error occurred while calculating complexity score.")
+        print(result.stderr)
