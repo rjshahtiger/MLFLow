@@ -11,7 +11,7 @@ from invoke import Collection, UnexpectedExit, task
 
 # Some default values
 PACKAGE_NAME = "ta_lib"
-ENV_PREFIX = "ta-libs"
+ENV_PREFIX = "ta-lib"
 ENV_PREFIX_PYSPARK = "ta-lib-pyspark"
 NUM_RETRIES = 10
 SLEEP_TIME = 1
@@ -704,6 +704,8 @@ def setup_ci_env(c, platform=PLATFORM, force=False):
         c.run(f"""python -m pip install -e "{HERE}" """)
 
 
+
+
 _create_task_collection(
     "dev",
     setup_env,
@@ -715,7 +717,7 @@ _create_task_collection(
     setup_addon_pyspark,
     setup_info,
     _build_docker_image,
-    setup_ci_env,
+    setup_ci_env
 )
 
 
@@ -1048,6 +1050,27 @@ _create_task_collection(
     start_ipython_shell,
 )
 
+from invoke import task
+import os
+import subprocess
+
+@task
+def complexity_score(c):
+    """
+    Calculates the complexity score of the codebase using radon.
+    """
+    # Run radon command to calculate the complexity score
+    result = subprocess.run(['radon', 'cc', '-a', '--include-ipynb', 'notebooks/dev'], capture_output=True, text=True)
+
+    if result.returncode == 0:
+        # Print the complexity score
+        print(result.stdout)
+    else:
+        # An error occurred while running radon
+        print("An error occurred while calculating complexity score.")
+        print(result.stderr)
+
+_create_task_collection('complexity_score',complexity_score)
 
 # --------------
 # Root namespace
@@ -1063,22 +1086,6 @@ if OS == "windows":
 
 ns.configure(config)
 
-from invoke import task
-import os
-import subprocess
 
-@task
-def complexity_score(ctx):
-    """
-    Calculates the complexity score of the codebase using radon.
-    """
-    # Run radon command to calculate the complexity score
-    result = subprocess.run(['radon', 'cc', '-a', 'notebook/dev'], capture_output=True, text=True)
 
-    if result.returncode == 0:
-        # Print the complexity score
-        print(result.stdout)
-    else:
-        # An error occurred while running radon
-        print("An error occurred while calculating complexity score.")
-        print(result.stderr)
+
