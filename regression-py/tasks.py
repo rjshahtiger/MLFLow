@@ -1040,6 +1040,11 @@ def start_ipython_shell(c, platform=PLATFORM, env=DEV_ENV):
     with py_env(c, env_name):
         c.run(f"""ipython -i "{startup_script}" """)
 
+@task(name="radon")
+def start_radon(c, platform=PLATFORM, env=DEV_ENV):
+    env_name = _get_env_name(env)
+    with py_env(c, env_name):
+        c.run(f"""radon cc "{HERE}" """)
 
 _create_task_collection(
     "launch",
@@ -1048,29 +1053,8 @@ _create_task_collection(
     start_tracker_ui,
     start_docs_server,
     start_ipython_shell,
+    start_radon
 )
-
-from invoke import task
-import os
-import subprocess
-
-@task
-def complexity_score(c):
-    """
-    Calculates the complexity score of the codebase using radon.
-    """
-    # Run radon command to calculate the complexity score
-    result = subprocess.run(['radon', 'cc', '-a', '--include-ipynb', 'notebooks/dev'], capture_output=True, text=True)
-
-    if result.returncode == 0:
-        # Print the complexity score
-        print(result.stdout)
-    else:
-        # An error occurred while running radon
-        print("An error occurred while calculating complexity score.")
-        print(result.stderr)
-
-_create_task_collection('complexity_score',complexity_score)
 
 # --------------
 # Root namespace
