@@ -13,7 +13,7 @@ def score_model(context, params):
 
     input_features_ds = "test/housing/features"
     input_target_ds = "test/housing/target"
-    output_ds = "score/sales/output"
+    output_ds = "score/housing/output"
     
     artifacts_folder = DEFAULT_ARTIFACTS_PATH
 

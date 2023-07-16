@@ -33,8 +33,8 @@ logger = logging.getLogger(__name__)
 def transform_features(context, params):
     """Transform dataset to create training datasets."""
 
-    input_features_ds = "train/sales/features"
-    input_target_ds = "train/sales/target"
+    input_features_ds = "train/housing/features"
+    input_target_ds = "train/housing/target"
 
     artifacts_folder = DEFAULT_ARTIFACTS_PATH
 

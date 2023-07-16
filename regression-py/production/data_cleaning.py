@@ -22,7 +22,7 @@ def clean_Housing_table(context, params):
     """Clean the ``Housing`` data table.
     """
 
-    input_dataset = "raw/hosing"
+    input_dataset = "raw/housing"
     output_dataset = "cleaned/housing"
 
     # load dataset
