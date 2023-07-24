@@ -52,9 +52,12 @@ def create_training_datasets(context, params):
 
     input_dataset = "cleaned/housing"
     # load dataset
-    sales_df_processed = load_dataset(context, input_dataset)
+    house_df_processed = load_dataset(context, input_dataset)
 
     target_col = "median_house_value"
+
+    splitter = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=context.random_seed)
+    house_df_train, house_df_test = custom_train_test_split(house_df_processed, splitter, by="ocean_proximity")
 
     train_X, train_y = (
         house_df_train

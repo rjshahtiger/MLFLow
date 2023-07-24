@@ -45,6 +45,16 @@ datasets:
         driver_params:
           save:
             index: False
+
+  score:
+    housing:
+      output:
+        type: ds
+        format: parquet
+        uri: ${core.data_base_path}/test/House_price/result.parquet
+        driver_params:
+          save:
+            index: False
   
   
 

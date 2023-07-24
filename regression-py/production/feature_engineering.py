@@ -13,6 +13,8 @@ from category_encoders import TargetEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder
+import ta_lib.eda.api as eda
 
 from ta_lib.core.api import (
     get_dataframe,
