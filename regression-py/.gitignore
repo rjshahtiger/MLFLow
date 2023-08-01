@@ -15,8 +15,6 @@
 **/_version.py
 
 # Ignore dataset and model folders
-data
-artifacts
 mlruns
 
 src/tigerml
