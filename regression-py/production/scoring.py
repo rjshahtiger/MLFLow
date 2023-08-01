@@ -11,9 +11,9 @@ from ta_lib.core.api import (get_dataframe,
 def score_model(context, params):   
     """Score a pre-trained model."""
 
-    input_features_ds = "test/sales/features"
-    input_target_ds = "test/sales/target"
-    output_ds = "score/sales/output"
+    input_features_ds = "test/housing/features"
+    input_target_ds = "test/housing/target"
+    output_ds = "score/housing/output"
     
     artifacts_folder = DEFAULT_ARTIFACTS_PATH
 

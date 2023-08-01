@@ -11,7 +11,7 @@ from invoke import Collection, UnexpectedExit, task
 
 # Some default values
 PACKAGE_NAME = "ta_lib"
-ENV_PREFIX = "ta-libs"
+ENV_PREFIX = "ta-lib"
 ENV_PREFIX_PYSPARK = "ta-lib-pyspark"
 NUM_RETRIES = 10
 SLEEP_TIME = 1
@@ -704,6 +704,8 @@ def setup_ci_env(c, platform=PLATFORM, force=False):
         c.run(f"""python -m pip install -e "{HERE}" """)
 
 
+
+
 _create_task_collection(
     "dev",
     setup_env,
@@ -715,7 +717,7 @@ _create_task_collection(
     setup_addon_pyspark,
     setup_info,
     _build_docker_image,
-    setup_ci_env,
+    setup_ci_env
 )
 
 
@@ -1038,6 +1040,11 @@ def start_ipython_shell(c, platform=PLATFORM, env=DEV_ENV):
     with py_env(c, env_name):
         c.run(f"""ipython -i "{startup_script}" """)
 
+@task(name="radon")
+def start_radon(c, platform=PLATFORM, env=DEV_ENV):
+    env_name = _get_env_name(env)
+    with py_env(c, env_name):
+        c.run(f"""radon cc "{HERE}" """)
 
 _create_task_collection(
     "launch",
@@ -1046,8 +1053,8 @@ _create_task_collection(
     start_tracker_ui,
     start_docs_server,
     start_ipython_shell,
+    start_radon
 )
-
 
 # --------------
 # Root namespace
@@ -1062,3 +1069,7 @@ if OS == "windows":
     config["pty"] = False
 
 ns.configure(config)
+
+
+
+
